@@ -15,6 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ValidacaoHorarioComercialTest {
+	
 	@Test
 	public void validaTresProdutosExistentes() {
 		Produtos produtos = mock(Produtos.class);

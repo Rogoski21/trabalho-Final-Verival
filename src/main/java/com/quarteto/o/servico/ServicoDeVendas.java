@@ -26,8 +26,11 @@ public class ServicoDeVendas {
     }
 
     public Integer calculaSubtotal(List<ItemVenda> itens) {
-        // TO DO:
-        return 0;
+        int soma= 0;
+        for(ItemVenda item :itens){
+            soma += item.getValorVendido() * item.getQuantidade();
+        }
+        return soma;
     }
 
     public Integer calculaImpostos(List<ItemVenda> itens) {
