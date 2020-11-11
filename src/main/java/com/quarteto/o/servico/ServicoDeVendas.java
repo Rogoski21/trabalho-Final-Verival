@@ -26,16 +26,17 @@ public class ServicoDeVendas {
     }
 
     public Integer calculaSubtotal(List<ItemVenda> itens) {
-        int soma= 0;
-        for(ItemVenda item :itens){
+        int soma = 0;
+        for (ItemVenda item : itens) {
             soma += item.getValorVendido() * item.getQuantidade();
         }
         return soma;
     }
 
     public Integer calculaImpostos(List<ItemVenda> itens) {
-        // TO DO:
-        return 0;
+        double imposto = regraImposto.calcular(itens);
+
+        return (int)imposto + calculaSubtotal(itens);
     }
 
     public Integer calculaPrecoFinal(List<ItemVenda> itens) {
@@ -44,7 +45,7 @@ public class ServicoDeVendas {
     }
 
     public Integer[] todosValores(List<ItemVenda> itens) {
-         // TO DO:
-         return null;
+        // TO DO:
+        return null;
     }
 }
