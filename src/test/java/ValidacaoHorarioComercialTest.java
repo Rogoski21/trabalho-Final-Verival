@@ -1,10 +1,10 @@
-import com.quarteto.o.Estoque;
-import com.quarteto.o.ItemEstoque;
-import com.quarteto.o.ItemVenda;
-import com.quarteto.o.Produto;
-import com.quarteto.o.Produtos;
-import com.quarteto.o.RegraValidacao;
-import com.quarteto.o.ValidacaoHorarioComercial;
+import com.quarteto.o.repositorio.Estoque;
+import com.quarteto.o.entidade.ItemEstoque;
+import com.quarteto.o.entidade.ItemVenda;
+import com.quarteto.o.entidade.Produto;
+import com.quarteto.o.repositorio.Produtos;
+import com.quarteto.o.servico.validacao.RegraValidacao;
+import com.quarteto.o.servico.validacao.ValidacaoHorarioComercial;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
