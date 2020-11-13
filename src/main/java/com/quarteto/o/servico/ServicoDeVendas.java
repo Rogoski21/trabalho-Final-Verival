@@ -35,17 +35,18 @@ public class ServicoDeVendas {
 
     public Integer calculaImpostos(List<ItemVenda> itens) {
         double imposto = regraImposto.calcular(itens);
-
-        return (int)imposto + calculaSubtotal(itens);
+        return (int) imposto;
     }
 
     public Integer calculaPrecoFinal(List<ItemVenda> itens) {
-        // TO DO:
-        return 0;
+        return calculaImpostos(itens) + calculaSubtotal(itens);
     }
 
     public Integer[] todosValores(List<ItemVenda> itens) {
-        // TO DO:
-        return null;
+        return new Integer[]{
+                calculaSubtotal(itens),
+                calculaImpostos(itens),
+                calculaPrecoFinal(itens),
+        };
     }
 }

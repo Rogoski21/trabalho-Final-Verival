@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ServicoDeVendasTest {
     private ServicoDeVendas servicoDeVendas;
@@ -34,7 +35,6 @@ class ServicoDeVendasTest {
 
     @Test
     void calculaSubtotal() {
-        //arrange
         ItemVenda p1 = new ItemVenda(1, 10, 4, 2);
         ItemVenda p2 = new ItemVenda(1, 10, 5, 3);
         ItemVenda p3 = new ItemVenda(1, 10, 6, 4);
@@ -42,16 +42,60 @@ class ServicoDeVendasTest {
         lista.add(p1);
         lista.add(p2);
         lista.add(p3);
-        //act
+
         int somatorio = servicoDeVendas.calculaSubtotal(lista);
-        //assert
+
         assertEquals(47, somatorio);
 
     }
 
     @Test
     void calculaImpostos() {
+        ItemVenda p1 = new ItemVenda(1, 10, 4, 2);
+        ItemVenda p2 = new ItemVenda(1, 10, 5, 3);
+        ItemVenda p3 = new ItemVenda(1, 10, 6, 4);
 
+        lista.add(p1);
+        lista.add(p2);
+        lista.add(p3);
 
+        when(regraImposto.calcular(lista)).thenReturn(4.70D);
+        Integer valorImposto = servicoDeVendas.calculaImpostos(lista);
+
+        assertEquals(4, valorImposto);
+
+    }
+
+    @Test
+    void calculaPrecoFinal() {
+        ItemVenda p1 = new ItemVenda(1, 10, 4, 2);
+        ItemVenda p2 = new ItemVenda(1, 10, 5, 3);
+        ItemVenda p3 = new ItemVenda(1, 10, 6, 4);
+
+        lista.add(p1);
+        lista.add(p2);
+        lista.add(p3);
+
+        when(regraImposto.calcular(lista)).thenReturn(4.70D);
+        Integer preco = servicoDeVendas.calculaPrecoFinal(lista);
+
+        assertEquals(51, preco);
+    }
+
+    @Test
+    void todosValores() {
+
+        ItemVenda p1 = new ItemVenda(1, 10, 4, 2);
+        ItemVenda p2 = new ItemVenda(1, 10, 5, 3);
+        ItemVenda p3 = new ItemVenda(1, 10, 6, 4);
+
+        lista.add(p1);
+        lista.add(p2);
+        lista.add(p3);
+
+        when(regraImposto.calcular(lista)).thenReturn(4.70D);
+        Integer[] total = servicoDeVendas.todosValores(lista);
+
+        assertArrayEquals(new Integer[]{47, 4, 51}, total);
     }
 }
