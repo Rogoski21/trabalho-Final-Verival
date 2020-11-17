@@ -36,6 +36,33 @@ class ServicoDeVendasTest {
     }
 
     @Test
+    @DisplayName("Valida deve lançar excecao")
+    void valida() {
+
+        RegraValidacao regraValidacao = mock(RegraValidacao.class);
+
+        when(factoryValidacao.getRegraValidacao()).thenReturn(regraValidacao);
+
+        doThrow(SistVendasException.class).when(regraValidacao).valida(produtos, estoque, lista);
+
+        assertThrows(SistVendasException.class, () -> servicoDeVendas.valida(lista));
+    }
+
+    @Test
+    @DisplayName("Valida nao deve lançar excecao")
+    void validaNaoLancaExcecao() {
+        RegraValidacao regraValidacao = mock(RegraValidacao.class);
+
+        when(factoryValidacao.getRegraValidacao()).thenReturn(regraValidacao);
+
+        doNothing().when(regraValidacao).valida(produtos, estoque, lista);
+
+        assertDoesNotThrow(() -> servicoDeVendas.valida(lista));
+
+        verify(regraValidacao, times(1)).valida(produtos, estoque, lista);
+    }
+
+    @Test
     @DisplayName("Calcula subtotal e retorna o somatório")
     void calculaSubtotal() {
         ItemVenda p1 = new ItemVenda(1, 10, 4, 2);
@@ -57,9 +84,7 @@ class ServicoDeVendasTest {
     void calculaSubtotalDeveRetornarZero() {
 
         int resultado = servicoDeVendas.calculaSubtotal(lista);
-
         assertEquals(0, resultado);
-
     }
 
     @Test
@@ -144,37 +169,5 @@ class ServicoDeVendasTest {
         Integer[] total = servicoDeVendas.todosValores(lista);
 
         assertArrayEquals(new Integer[]{0, 0, 0}, total);
-    }
-
-    @Test
-    @DisplayName("Valida deve lançar excecao")
-    void valida() {
-
-        RegraValidacao regraValidacao = mock(RegraValidacao.class);
-
-        when(factoryValidacao.getRegraValidacao()).thenReturn(regraValidacao);
-
-        doThrow(SistVendasException.class).when(regraValidacao).valida(produtos, estoque, lista);
-
-        assertThrows(SistVendasException.class, () -> servicoDeVendas.valida(lista));
-    }
-
-    @Test
-    @DisplayName("Valida nao deve lançar excecao")
-    void validaNaoLancaExcecao() {
-        RegraValidacao regraValidacao = mock(RegraValidacao.class);
-
-        when(factoryValidacao.getRegraValidacao()).thenReturn(regraValidacao);
-
-        doNothing().when(regraValidacao).valida(produtos, estoque, lista);
-
-        servicoDeVendas.valida(lista);
-
-
-        /*doNothing().when(mockedUserRepository).updateName(anyLong(),anyString());
-
-        userService.updateName(1L,"void mock test")
-
-        verify(mockedUserRepository, times(1)).updateName(1L,"void mock test");*/
     }
 }

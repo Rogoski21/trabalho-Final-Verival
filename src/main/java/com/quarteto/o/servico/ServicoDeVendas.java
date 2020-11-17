@@ -9,9 +9,9 @@ import com.quarteto.o.repositorio.Produtos;
 import java.util.List;
 
 public class ServicoDeVendas {
-    private RegraImposto regraImposto;
-    private Produtos produtos;
-    private Estoque estoque;
+    private final RegraImposto regraImposto;
+    private final Produtos produtos;
+    private final Estoque estoque;
     private FactoryValidacao factoryValidacao;
 
     public ServicoDeVendas(Produtos produtos, Estoque estoque, RegraImposto regraImposto, FactoryValidacao factoryValidacao) {
