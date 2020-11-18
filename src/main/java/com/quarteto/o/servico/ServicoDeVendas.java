@@ -9,9 +9,9 @@ import com.quarteto.o.repositorio.Produtos;
 import java.util.List;
 
 public class ServicoDeVendas {
-    private final RegraImposto regraImposto;
-    private final Produtos produtos;
-    private final Estoque estoque;
+    private RegraImposto regraImposto;
+    private Produtos produtos;
+    private Estoque estoque;
     private FactoryValidacao factoryValidacao;
 
     public ServicoDeVendas(Produtos produtos, Estoque estoque, RegraImposto regraImposto, FactoryValidacao factoryValidacao) {
@@ -26,27 +26,22 @@ public class ServicoDeVendas {
     }
 
     public Integer calculaSubtotal(List<ItemVenda> itens) {
-        int soma = 0;
-        for (ItemVenda item : itens) {
-            soma += item.getValorVendido() * item.getQuantidade();
-        }
-        return soma;
+        return (int) (itens.stream().mapToDouble(it -> it.getValorVendido() * it.getQuantidade()).sum());
     }
 
     public Integer calculaImpostos(List<ItemVenda> itens) {
-        double imposto = regraImposto.calcular(itens);
-        return (int) imposto;
+        return (int) regraImposto.calcular(itens);
     }
 
     public Integer calculaPrecoFinal(List<ItemVenda> itens) {
-        return calculaImpostos(itens) + calculaSubtotal(itens);
+        return calculaSubtotal(itens) + calculaImpostos(itens);
     }
 
     public Integer[] todosValores(List<ItemVenda> itens) {
-        return new Integer[]{
-                calculaSubtotal(itens),
-                calculaImpostos(itens),
-                calculaPrecoFinal(itens),
-        };
+        Integer[] valores = new Integer[3];
+        valores[0] = calculaSubtotal(itens);
+        valores[1] = calculaImpostos(itens);
+        valores[2] = calculaPrecoFinal(itens);
+        return valores;
     }
 }

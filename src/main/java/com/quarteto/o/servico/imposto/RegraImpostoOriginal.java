@@ -7,11 +7,7 @@ import java.util.List;
 public class RegraImpostoOriginal implements RegraImposto {
     @Override
     public double calcular(List<ItemVenda> itens) {
-        double totalImposto = 0.0;
-        for(ItemVenda itemVenda : itens) {
-            double valor = itemVenda.getQuantidade() * itemVenda.getValorVendido();
-            totalImposto += valor * 0.1;
-        }
-        return totalImposto;
+        double soma = itens.stream().mapToDouble(it->it.getValorVendido()).sum();
+        return soma * 0.01;
     }
 }

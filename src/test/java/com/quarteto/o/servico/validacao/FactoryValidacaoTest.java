@@ -32,9 +32,9 @@ class FactoryValidacaoTest {
 			"18, 1",
 			"23, 0"
 	})
-	void getRegraValidacaoDeveRetornarInstanciaHorarioNaoComercial() {
+	void getRegraValidacaoDeveRetornarInstanciaHorarioNaoComercial(int hour, int minute) {
 
-		var agora = LocalTime.of(23,0);
+		var agora = LocalTime.of(hour,minute);
 		var factoryValidacao = new FactoryValidacao(agora);
 
 		var result = factoryValidacao.getRegraValidacao();
