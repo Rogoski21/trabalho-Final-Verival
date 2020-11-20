@@ -32,14 +32,18 @@ public class ItemEstoque {
     }
 
     public boolean disponivel(int quantidade){
-        return this.quantidade >= quantidade;
+        if (quantidade <= 0) {
+            throw new SistVendasException(SistVendasException.Causa.QUANTIDADE_INVALIDA);
+        } else {
+            return this.quantidade >= quantidade;
+        }
     }
 
     public void entrada(int quantidade) {
         if (quantidade <= 0) {
             throw new SistVendasException(SistVendasException.Causa.QUANTIDADE_INVALIDA);
         } else {
-            this.quantidade = quantidade;
+            this.quantidade += quantidade;
         }
     }
 
@@ -50,7 +54,7 @@ public class ItemEstoque {
             if (this.quantidade - quantidade < 0) {
                 throw new SistVendasException(SistVendasException.Causa.QUANTIDADE_INSUFICIENTE);
             } else {
-                this.quantidade += quantidade;
+                this.quantidade -= quantidade;
             }
         }
     }

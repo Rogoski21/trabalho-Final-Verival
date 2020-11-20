@@ -24,7 +24,7 @@ class ServicoDeVendasTest {
     private Produtos produtos;
     private Estoque estoque;
     private FactoryValidacao factoryValidacao;
-    private List<ItemVenda> lista = new ArrayList<>();
+    private List<ItemVenda> lista;
 
     @BeforeEach
     void setUp() {
@@ -32,6 +32,7 @@ class ServicoDeVendasTest {
         produtos = mock(Produtos.class);
         estoque = mock(Estoque.class);
         factoryValidacao = mock(FactoryValidacao.class);
+        lista = new ArrayList<>();
         servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
     }
 
