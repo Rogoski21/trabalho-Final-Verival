@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 class ValidacaoForaHorarioComercialTest {
 
     @Test
+
     void validaTresProdutosNaoLancaExcecao() {
         Produtos produtos = mock(Produtos.class);
         when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));

@@ -12,8 +12,8 @@ public class SistVendasException extends IllegalArgumentException {
         VENDA_INEXISTENTE,
         VENDA_COM_EXCESSO_DE_ITENS,
         VENDA_COM_ITEM_MUITO_CARO
-    };
-    private Causa causa;
+    }
+    private final Causa causa;
 
     public SistVendasException(Causa causa){
         super(causa.toString());
