@@ -12,6 +12,9 @@
         <java.version>14</java.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.projectKey>Rogoski21_combustivel-verival</sonar.projectKey>
+        <sonar.organization>rogoski21</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
