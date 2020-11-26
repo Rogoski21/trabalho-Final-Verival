@@ -16,85 +16,85 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ValidacaoHorarioComercialTest {
-	
-	@Test
-	public void validaTresProdutosExistentesNaoLancaExcecao() {
-		Produtos produtos = mock(Produtos.class);
-		when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
-		when(produtos.recupera(30)).thenReturn(new Produto(30,"Prod30",2000.0));
-		when(produtos.recupera(50)).thenReturn(new Produto(50,"Prod15",1500.0));
+class ValidacaoHorarioComercialTest {
 
-		Estoque estoque = mock(Estoque.class);
-		when(estoque.recupera(10)).thenReturn(new ItemEstoque(10,5));
-		when(estoque.recupera(30)).thenReturn(new ItemEstoque(30,3));
-		when(estoque.recupera(50)).thenReturn(new ItemEstoque(50,15));
+    @Test
+    void validaTresProdutosExistentesNaoLancaExcecao() {
+        Produtos produtos = mock(Produtos.class);
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
 
-		List<ItemVenda> itens = new ArrayList<>(3);
-		itens.add(new ItemVenda(1,10,2,1000));
-		itens.add(new ItemVenda(2,30,3,2000));
-		itens.add(new ItemVenda(3,50,1,1500));
+        Estoque estoque = mock(Estoque.class);
+        when(estoque.recupera(10)).thenReturn(new ItemEstoque(10, 5));
+        when(estoque.recupera(30)).thenReturn(new ItemEstoque(30, 3));
+        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 15));
 
-		RegraValidacao regra = new ValidacaoHorarioComercial();
-		assertDoesNotThrow(()->regra.valida(produtos,estoque,itens));
-	}
+        List<ItemVenda> itens = new ArrayList<>(3);
+        itens.add(new ItemVenda(1, 10, 2, 1000));
+        itens.add(new ItemVenda(2, 30, 3, 2000));
+        itens.add(new ItemVenda(3, 50, 1, 1500));
 
-	@Test
-	void validaProdutoLancaExcecaoSeNaoExistirNoEstoque() {
+        RegraValidacao regra = new ValidacaoHorarioComercial();
+        assertDoesNotThrow(() -> regra.valida(produtos, estoque, itens));
+    }
 
-		Produtos produtos = mock(Produtos.class);
-		when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
+    @Test
+    void validaProdutoLancaExcecaoSeNaoExistirNoEstoque() {
 
-		Estoque estoque = mock(Estoque.class);
+        Produtos produtos = mock(Produtos.class);
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
 
-		List<ItemVenda> itens = new ArrayList<>(3);
-		itens.add(new ItemVenda(1,10,2,1000));
+        Estoque estoque = mock(Estoque.class);
 
-		RegraValidacao regra = new ValidacaoHorarioComercial();
+        List<ItemVenda> itens = new ArrayList<>(3);
+        itens.add(new ItemVenda(1, 10, 2, 1000));
 
-		assertThrows(SistVendasException.class, ()->regra.valida(produtos,estoque,itens));
-	}
+        RegraValidacao regra = new ValidacaoHorarioComercial();
 
-	@Test
-	void validaProdutoExistenteLancaExcecaoSeNaoTiverQuantidadeSuficiente() {
+        assertThrows(SistVendasException.class, () -> regra.valida(produtos, estoque, itens));
+    }
 
-		Produtos produtos = mock(Produtos.class);
-		when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
+    @Test
+    void validaProdutoExistenteLancaExcecaoSeNaoTiverQuantidadeSuficiente() {
 
-		var estoque1 =  mock(ItemEstoque.class);
+        Produtos produtos = mock(Produtos.class);
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
 
-		Estoque estoque = mock(Estoque.class);
-		when(estoque.recupera(10)).thenReturn(estoque1);
+        var estoque1 = mock(ItemEstoque.class);
 
-		List<ItemVenda> itens = new ArrayList<>(3);
-		itens.add(new ItemVenda(1,10,2,1000));
+        Estoque estoque = mock(Estoque.class);
+        when(estoque.recupera(10)).thenReturn(estoque1);
 
-		when(estoque1.disponivel(anyInt()))
-				.thenReturn(false);
+        List<ItemVenda> itens = new ArrayList<>(3);
+        itens.add(new ItemVenda(1, 10, 2, 1000));
 
-		RegraValidacao regra = new ValidacaoHorarioComercial();
+        when(estoque1.disponivel(anyInt()))
+                .thenReturn(false);
 
-		assertThrows(SistVendasException.class, () -> regra.valida(produtos,estoque,itens));
-	}
+        RegraValidacao regra = new ValidacaoHorarioComercial();
 
-	@Test
-	public void validaTresProdutosLancaExcecaoMuitoCaro() {
-		Produtos produtos = mock(Produtos.class);
-		when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
-		when(produtos.recupera(30)).thenReturn(new Produto(30,"Prod30",2000.0));
-		when(produtos.recupera(50)).thenReturn(new Produto(50,"Prod15",1500.0));
+        assertThrows(SistVendasException.class, () -> regra.valida(produtos, estoque, itens));
+    }
 
-		Estoque estoque = mock(Estoque.class);
-		when(estoque.recupera(10)).thenReturn(new ItemEstoque(10,5));
-		when(estoque.recupera(30)).thenReturn(new ItemEstoque(30,3));
-		when(estoque.recupera(50)).thenReturn(new ItemEstoque(50,15));
+    @Test
+    void validaTresProdutosLancaExcecaoMuitoCaro() {
+        Produtos produtos = mock(Produtos.class);
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
 
-		List<ItemVenda> itens = new ArrayList<>(3);
-		itens.add(new ItemVenda(1,10,2,1000));
-		itens.add(new ItemVenda(2,30,3,2000));
-		itens.add(new ItemVenda(3,50,1,1500));
+        Estoque estoque = mock(Estoque.class);
+        when(estoque.recupera(10)).thenReturn(new ItemEstoque(10, 5));
+        when(estoque.recupera(30)).thenReturn(new ItemEstoque(30, 3));
+        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 15));
 
-		RegraValidacao regra = new ValidacaoForaHorarioComercial();
-		assertThrows(SistVendasException.class, () -> regra.valida(produtos,estoque,itens));
-	}
+        List<ItemVenda> itens = new ArrayList<>(3);
+        itens.add(new ItemVenda(1, 10, 2, 1000));
+        itens.add(new ItemVenda(2, 30, 3, 2000));
+        itens.add(new ItemVenda(3, 50, 1, 1500));
+
+        RegraValidacao regra = new ValidacaoForaHorarioComercial();
+        assertThrows(SistVendasException.class, () -> regra.valida(produtos, estoque, itens));
+    }
 }

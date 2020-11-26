@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class ServicoDeVendasIT {
+class ServicoDeVendasIT {
     private FactoryValidacao factoryValidacao;
     private ServicoDeVendas servicoDeVendas;
     private RegraImposto regraImposto;
@@ -31,7 +31,7 @@ public class ServicoDeVendasIT {
     private Estoque estoque;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         produtos = mock(Produtos.class);
         estoque = mock(Estoque.class);
     }
@@ -59,13 +59,13 @@ public class ServicoDeVendasIT {
         regraImposto = new RegraImpostoOriginal();
         servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
 
-        when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
-        when(produtos.recupera(30)).thenReturn(new Produto(30,"Prod30",2000.0));
-        when(produtos.recupera(50)).thenReturn(new Produto(50,"Prod15",1500.0));
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
 
-        when(estoque.recupera(10)).thenReturn(new ItemEstoque(10,5));
-        when(estoque.recupera(30)).thenReturn(new ItemEstoque(30,3));
-        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50,15));
+        when(estoque.recupera(10)).thenReturn(new ItemEstoque(10, 5));
+        when(estoque.recupera(30)).thenReturn(new ItemEstoque(30, 3));
+        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 15));
 
         List<ItemVenda> lista = criaLista();
 
@@ -81,9 +81,9 @@ public class ServicoDeVendasIT {
         regraImposto = new RegraImpostoOriginal();
         servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
 
-        when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
-        when(produtos.recupera(30)).thenReturn(new Produto(30,"Prod30",2000.0));
-        when(produtos.recupera(50)).thenReturn(new Produto(50,"Prod15",1500.0));
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
 
         when(estoque.recupera(10)).thenReturn(null);
 
@@ -101,11 +101,11 @@ public class ServicoDeVendasIT {
         regraImposto = new RegraImpostoOriginal();
         servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
 
-        when(produtos.recupera(10)).thenReturn(new Produto(10,"Prod10",1000.0));
-        when(produtos.recupera(30)).thenReturn(new Produto(30,"Prod30",2000.0));
-        when(produtos.recupera(50)).thenReturn(new Produto(50,"Prod15",1500.0));
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
 
-        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50,1));
+        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 1));
 
         List<ItemVenda> lista = criaLista();
 
