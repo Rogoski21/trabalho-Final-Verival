@@ -10,32 +10,32 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RegraImpostoOriginalTest {
-	private List<ItemVenda> lista;
-	private RegraImposto regraImposto;
+    private List<ItemVenda> lista;
+    private RegraImposto regraImposto;
 
-	@BeforeEach
-	void setUp() {
-		lista = new ArrayList<>();
-		regraImposto = new RegraImpostoOriginal();
-	}
+    @BeforeEach
+    void setUp() {
+        lista = new ArrayList<>();
+        regraImposto = new RegraImpostoOriginal();
+    }
 
-	@Test
-	public void calcularDevolveImpostoSobreOSubtotal() {
-		lista.add(new ItemVenda(1, 10, 4, 2));
-		lista.add(new ItemVenda(1, 10, 5, 3));
-		lista.add(new ItemVenda(1, 10, 6, 4));
+    @Test
+    void calcularDevolveImpostoSobreOSubtotal() {
+        lista.add(new ItemVenda(1, 10, 4, 2));
+        lista.add(new ItemVenda(1, 10, 5, 3));
+        lista.add(new ItemVenda(1, 10, 6, 4));
 
-		double imposto = regraImposto.calcular(lista);
+        double imposto = regraImposto.calcular(lista);
 
-		assertEquals(4.7D, imposto);
-	}
+        assertEquals(4.7D, imposto);
+    }
 
-	@Test
-	public void calcularDevolveImpostoZero() {
-		double imposto = regraImposto.calcular(lista);
+    @Test
+    void calcularDevolveImpostoZero() {
+        double imposto = regraImposto.calcular(lista);
 
-		assertEquals(0, imposto);
-	}
+        assertEquals(0, imposto);
+    }
 
 
 }
