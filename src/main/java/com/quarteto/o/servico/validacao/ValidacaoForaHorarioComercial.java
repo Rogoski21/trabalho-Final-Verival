@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ValidacaoForaHorarioComercial implements RegraValidacao {
     @Override
-    public void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens) throws SistVendasException {
+    public void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens) {
         if (itens.size()>5){
             throw new SistVendasException(SistVendasException.Causa.VENDA_COM_EXCESSO_DE_ITENS);
         }
