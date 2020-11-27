@@ -19,8 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ServicoDeVendasIT {
@@ -51,50 +50,8 @@ class ServicoDeVendasIT {
     }
 
     @Test
-    @DisplayName("Valida horario comercial, nao deve lançar excecao")
-    void validaHorarioComercialNaoDeveLancarExcecao() {
-        LocalTime agora = LocalTime.of(9, 0);
-        factoryValidacao = new FactoryValidacao(agora);
-
-        regraImposto = new RegraImpostoOriginal();
-        servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
-
-        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
-        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
-        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
-
-        when(estoque.recupera(10)).thenReturn(new ItemEstoque(10, 5));
-        when(estoque.recupera(30)).thenReturn(new ItemEstoque(30, 3));
-        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 15));
-
-        List<ItemVenda> lista = criaLista();
-
-        assertDoesNotThrow(() -> servicoDeVendas.valida(lista));
-    }
-
-    @Test
-    @DisplayName("Valida horario comercial, deve lançar excecao - produto nao encontrado")
-    void validaHorarioComercialDeveLancarExcecaoProdutoNaoEncontrado() {
-        LocalTime agora = LocalTime.of(9, 0);
-        factoryValidacao = new FactoryValidacao(agora);
-
-        regraImposto = new RegraImpostoOriginal();
-        servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
-
-        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
-        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
-        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
-
-        when(estoque.recupera(10)).thenReturn(null);
-
-        List<ItemVenda> lista = criaLista();
-
-        assertThrows(SistVendasException.class, () -> servicoDeVendas.valida(lista));
-    }
-
-    @Test
-    @DisplayName("Valida horario comercial, deve lançar excecao - quantidade insuficiente")
-    void validaHorarioComercialDeveLancarExcecaoQuantInsuficiente() {
+    @DisplayName("Valida - garante integracao de classes do metodo valida horario comercial")
+    void validaIntegracaoDeClassesDoMetodoValidaHorarioComercial() {
         LocalTime agora = LocalTime.of(9, 0);
         factoryValidacao = new FactoryValidacao(agora);
 
@@ -110,5 +67,41 @@ class ServicoDeVendasIT {
         List<ItemVenda> lista = criaLista();
 
         assertThrows(SistVendasException.class, () -> servicoDeVendas.valida(lista));
+    }
+
+    @Test
+    @DisplayName("Valida - garante integracao de classes do metodo valida fora do horario comercial")
+    void validaIntegracaoDeClassesDoMetodoValidaForaDoHorarioComercial() {
+        LocalTime agora = LocalTime.of(21, 0);
+        factoryValidacao = new FactoryValidacao(agora);
+
+        regraImposto = new RegraImpostoOriginal();
+        servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
+
+        when(produtos.recupera(10)).thenReturn(new Produto(10, "Prod10", 1000.0));
+        when(produtos.recupera(30)).thenReturn(new Produto(30, "Prod30", 2000.0));
+        when(produtos.recupera(50)).thenReturn(new Produto(50, "Prod15", 1500.0));
+
+        when(estoque.recupera(50)).thenReturn(new ItemEstoque(50, 1));
+
+        List<ItemVenda> lista = criaLista();
+
+        assertThrows(SistVendasException.class, () -> servicoDeVendas.valida(lista));
+    }
+
+    @Test
+    @DisplayName("valida - garante que o imposto sera calculado para a lista")
+    void validaIntegridadeDoCalculoDoImpostoDaLista() {
+        LocalTime agora = LocalTime.of(10, 0);
+        factoryValidacao = new FactoryValidacao(agora);
+        regraImposto = new RegraImpostoOriginal();
+        servicoDeVendas = new ServicoDeVendas(produtos, estoque, regraImposto, factoryValidacao);
+
+        List<ItemVenda> lista = criaLista();
+
+        Integer valorImposto = servicoDeVendas.calculaImpostos(lista);
+
+        assertEquals(1, valorImposto);
+
     }
 }
