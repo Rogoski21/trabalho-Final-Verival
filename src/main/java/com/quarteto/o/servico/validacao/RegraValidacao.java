@@ -1,7 +1,6 @@
 package com.quarteto.o.servico.validacao;
 
 import com.quarteto.o.entidade.ItemVenda;
-import com.quarteto.o.excecoes.SistVendasException;
 import com.quarteto.o.repositorio.Estoque;
 import com.quarteto.o.repositorio.Produtos;
 
