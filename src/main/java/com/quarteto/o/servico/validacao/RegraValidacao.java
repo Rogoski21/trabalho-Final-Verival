@@ -8,5 +8,5 @@ import com.quarteto.o.repositorio.Produtos;
 import java.util.List;
 
 public interface RegraValidacao {
-    void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens) throws SistVendasException;
+    void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens);
 }

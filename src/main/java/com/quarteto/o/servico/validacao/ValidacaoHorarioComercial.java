@@ -12,7 +12,7 @@ import java.util.List;
 public class ValidacaoHorarioComercial implements RegraValidacao {
 
     @Override
-    public void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens) throws SistVendasException {
+    public void valida(Produtos produtos, Estoque estoque, List<ItemVenda> itens) {
         for (ItemVenda iv : itens) {
             final Produto produto = produtos.recupera(iv.getCodigoProduto());
             final int quantidade = iv.getQuantidade();
